@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="1" author="andper">
+        <createTable tableName="tb_user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="tb_user"
+                                 baseColumnNames="group_id"
+                                 constraintName="fk_user"
+                                 referencedTableName="tb_group"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2" author="andper" dbms="postgresql">
+        <sql>
+            INSERT INTO TB_USER(NAME, EMAIL, PASSWORD, GROUP_ID) VALUES('ANDRE SILVA', 'email@provider.com', '123456', 1);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
